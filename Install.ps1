@@ -1,8 +1,9 @@
 <#
   Install.ps1 - installs Connect-AirPods for the current user.
 
-  Copies Connect-AirPods.ps1 to %LOCALAPPDATA%\AirPodsConnect and adds a
-  "Connect AirPods" shortcut to the Desktop and the Start menu. No admin needed.
+  Copies Connect-AirPods.ps1 and assets\icon.ico to %LOCALAPPDATA%\AirPodsConnect
+  and adds a "Connect AirPods" shortcut to the Desktop and the Start menu.
+  No admin needed. The shortcut uses that icon.
 
   Usage:
     Install.ps1                     install (or update)
@@ -47,6 +48,23 @@ if ($source -and (Test-Path $source)) {
 # Downloaded files carry a Mark of the Web; clear it so the shortcut runs without a prompt.
 Unblock-File $script
 
+# Shortcut and notification logo. assets\icon.ico in a clone; otherwise fetch it.
+# A missing logo falls back to the Windows audio icon so install still finishes.
+$icon = Join-Path $installDir 'icon.ico'
+$iconSource = if ($PSScriptRoot) { Join-Path $PSScriptRoot 'assets\icon.ico' }
+if ($iconSource -and (Test-Path $iconSource)) {
+    Copy-Item $iconSource $icon -Force
+} else {
+    try {
+        Invoke-WebRequest -UseBasicParsing -OutFile $icon `
+            'https://raw.githubusercontent.com/jacobrakaiFoundation/airpods-connect/main/assets/icon.ico'
+    } catch {
+        Remove-Item $icon -ErrorAction SilentlyContinue
+    }
+}
+if (Test-Path $icon) { Unblock-File $icon }
+$iconLocation = if (Test-Path $icon) { "$icon,0" } else { "$env:SystemRoot\System32\mmres.dll,-3011" }
+
 $arguments = "-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File `"$script`""
 if ($Name -ne 'AirPods') { $arguments += " -Name `"$Name`"" }
 
@@ -60,7 +78,7 @@ foreach ($path in $shortcuts) {
     $lnk.TargetPath = "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe"
     $lnk.Arguments = $arguments
     $lnk.WorkingDirectory = $installDir
-    $lnk.IconLocation = "$env:SystemRoot\System32\mmres.dll,-3011"
+    $lnk.IconLocation = $iconLocation
     $lnk.WindowStyle = 7
     $lnk.Description = "Connect $Name over Bluetooth"
     $lnk.Save()
