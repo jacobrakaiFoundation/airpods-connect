@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="512" height="512">
+  <title>airpods-connect</title>
+  <rect width="192" height="192" rx="42" fill="#b23a25"/>
+  <path d="M62 108C62 58 78 42 96 42s34 16 34 66" fill="none" stroke="#faf6f0" stroke-width="16" stroke-linecap="round"/>
+  <rect x="42" y="92" width="36" height="62" rx="18" fill="#faf6f0"/>
+  <rect x="114" y="92" width="36" height="62" rx="18" fill="#faf6f0"/>
+  <rect x="54" y="106" width="12" height="34" rx="6" fill="#b23a25"/>
+  <rect x="126" y="106" width="12" height="34" rx="6" fill="#b23a25"/>
+</svg>

@@ -1,3 +1,5 @@
+<p><img src="assets/icon.svg" alt="" width="72" height="72"></p>
+
 # airpods-connect: one-click AirPods for Windows
 
 **Get your AirPods back from your iPhone with one click.**
@@ -5,7 +7,7 @@
 Apple's automatic switching only moves AirPods between Apple devices. On Windows, taking them back means opening Bluetooth settings, finding the device and clicking Connect, and that sometimes fails. This adds a **Connect AirPods** shortcut that does it in one click, in about three seconds.
 
 - Tested with AirPods Max on a Surface Pro 9 running Windows 11. It uses the same Windows request for every Bluetooth headset, so other AirPods, Beats and other headphones should work too; use `-Name` for non-AirPods.
-- No admin rights, nothing to install beyond one PowerShell script, and **no network connections**.
+- No admin rights, nothing to install beyond the script and its icon, and **no network connections**.
 - It runs in Windows PowerShell 5.1, which comes with Windows 10 and 11.
 
 ## Quick start
@@ -20,13 +22,13 @@ Or download the repository and run:
 powershell -ExecutionPolicy Bypass -File .\Install.ps1
 ```
 
-Pair your AirPods in **Settings → Bluetooth & devices** first. After that, click **Connect AirPods** on the Desktop or in the Start menu whenever you want them on the PC. A notification tells you whether they connected. To get a taskbar button, right-click the Start menu entry and choose **Pin to taskbar**.
+Pair your AirPods in **Settings → Bluetooth & devices** first. After that, click **Connect AirPods** on the Desktop or in the Start menu whenever you want them on the PC. The shortcut and the notification use the headphone mark above. A notification tells you whether they connected. To get a taskbar button, right-click the Start menu entry and choose **Pin to taskbar**.
 
 Install options:
 
 - **Other headphones:** `Install.ps1 -Name "WH-1000XM5"` makes the shortcut connect any paired device whose name contains that text.
 - **Start menu only:** `Install.ps1 -NoDesktop`.
-- **Remove:** `Install.ps1 -Uninstall` deletes the script and both shortcuts.
+- **Remove:** `Install.ps1 -Uninstall` deletes the installed files and both shortcuts.
 
 ## Using the script directly
 
@@ -62,3 +64,7 @@ The first run compiles a small helper DLL (`AirPodsConnect.dll`) next to the scr
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+AirPods is a trademark of Apple Inc. This project is independent of Apple. The headphone mark is original.
+
+<p><a href="https://jacobrakai.org/"><img src="https://raw.githubusercontent.com/jacobrakaiFoundation/.github/main/profile/foundation-light.svg#gh-light-mode-only" alt="Jacobrakai Foundation" width="480"><img src="https://raw.githubusercontent.com/jacobrakaiFoundation/.github/main/profile/foundation-dark.svg#gh-dark-mode-only" alt="" width="480"></a></p>

@@ -128,12 +128,20 @@ namespace AirPodsConnect {
 function Show-Notice([string]$Text, [string]$Kind = 'Info') {
     if ($Quiet) { Write-Output $Text; return }
     Add-Type -AssemblyName System.Windows.Forms, System.Drawing
-    $icon = New-Object System.Windows.Forms.NotifyIcon
-    $icon.Icon = [System.Drawing.SystemIcons]::Information
-    $icon.Visible = $true
-    $icon.ShowBalloonTip(4000, 'AirPods', $Text, [System.Windows.Forms.ToolTipIcon]::$Kind)
+    $notice = New-Object System.Windows.Forms.NotifyIcon
+    $logo = @(
+        (Join-Path $PSScriptRoot 'icon.ico'),
+        (Join-Path $PSScriptRoot 'assets\icon.ico')
+    ) | Where-Object { Test-Path $_ } | Select-Object -First 1
+    if ($logo) {
+        $notice.Icon = New-Object System.Drawing.Icon $logo
+    } else {
+        $notice.Icon = [System.Drawing.SystemIcons]::Information
+    }
+    $notice.Visible = $true
+    $notice.ShowBalloonTip(4000, 'AirPods', $Text, [System.Windows.Forms.ToolTipIcon]::$Kind)
     Start-Sleep -Seconds 4
-    $icon.Dispose()
+    $notice.Dispose()
 }
 
 # Every audio endpoint of the device, stereo "Headphones" first. Which one accepts the
